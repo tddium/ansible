@@ -54,7 +54,11 @@ this threshold when you call ansi_escaped:
      end
 
 
-## Where's the name Ansible come from?
+## What's with the name Ansible?
 
 An [ansible](http://en.wikipedia.org/wiki/Ansible) is a fictional faster than light
 communication device.
+
+## Contributing
+
+We welcome fixes and enhancements.  Feel free to fork on github and submit a pull request.
