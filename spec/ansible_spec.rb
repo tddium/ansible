@@ -7,7 +7,7 @@ end
 describe Ansible do
   ANSIBLE_NONE = %Q{<span class="ansible_none">}
   ANSIBLE_RED = %Q{<span class="ansible_red">}
-  ANSIBLE_GREEN = %Q{<span class="ansible_green">}
+  ANSIBLE_GREEN = %Q{<span class="ansible_green ansible_bold">}
   subject { Helper.new } 
   describe "#ansi_escaped" do
     SAMPLE_TEXT = {
@@ -15,12 +15,14 @@ describe Ansible do
            %Q{#{ANSIBLE_NONE}escaped </span>#{ANSIBLE_RED}text</span>#{ANSIBLE_NONE}</span>},
       "escaped [0;31mtext[0m" =>
            %Q{#{ANSIBLE_NONE}escaped </span>#{ANSIBLE_RED}text</span>#{ANSIBLE_NONE}</span>},
-      "escaped [1;31mtext[0m" =>
+      "escaped [0;31mtext[0m" =>
            %Q{#{ANSIBLE_NONE}escaped </span>#{ANSIBLE_RED}text</span>#{ANSIBLE_NONE}</span>},
-      "escaped [1;31mtext [1;32mother[0m" =>
+      "escaped [0;31mtext [1;32mother[0m" =>
            %Q{#{ANSIBLE_NONE}escaped </span>#{ANSIBLE_RED}text </span>#{ANSIBLE_GREEN}other</span>#{ANSIBLE_NONE}</span>},
-      "escaped [1;31mtext [1;32mother[0m[m" =>
+      "escaped [0;31mtext [1;32mother[0m[m" =>
            %Q{#{ANSIBLE_NONE}escaped </span>#{ANSIBLE_RED}text </span>#{ANSIBLE_GREEN}other</span>#{ANSIBLE_NONE}</span>#{ANSIBLE_NONE}</span>},
+      "escaped [1;95mtext[0m" =>
+           %Q{#{ANSIBLE_NONE}escaped </span><span class="ansible_95 ansible_bold">text</span>#{ANSIBLE_NONE}</span>},
     }
 
     it "should render the text as html" do
