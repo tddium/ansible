@@ -1,25 +1,9 @@
 module Ansible
   def escape_to_html(data)
-    data = span("none", 0, true) + data
-
-    { 30 => :black,
-      31 => :red,
-      32 => :green,
-      33 => :yellow,
-      34 => :blue,
-      35 => :magenta,
-      36 => :cyan,
-      37 => :white,
-      90 => :gray
-    }.each do |key, value|
-      data.gsub!(/\e\[(\d;)?#{key}m/) { |match|
-        span(value, $1)
-      }
-    end
-
-    data.gsub!(/\e\[0?m/, span("none"))
-    data.gsub!(/\e\[(\d;)?(\d+)m/) { |match|
-      span($2, $1)
+    data = span(true, "none") + data
+    data.gsub!(/\e\[0?m/, span(false, "none"))
+    data.gsub!(/\e\[([0-9;]+)m/) { |match|
+      span(false, *$1.split(';'))
     }
     data + "</span>"
   end
@@ -40,11 +24,15 @@ module Ansible
   end
 
   private
-    def span(klass, level=0, first=false)
+    def span(first, *codes)
       s = first ? "" : "</span>"
 
-      classes = ["ansible_#{klass}"]
-      classes << "ansible_bold" if level.to_i == 1
+      if codes.include?("none")
+        classes = ["ansible_none"]
+      else
+        classes = codes.reject{|c| c.to_i == 0}.map{|c| "ansible_#{c.to_i}"}
+      end
+
       s += %Q{<span class="#{classes.join(" ")}">}
       s
     end
