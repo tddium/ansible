@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ansible (0.2.0)
+    ansible (0.5.0)
 
 GEM
   remote: http://rubygems.org/
