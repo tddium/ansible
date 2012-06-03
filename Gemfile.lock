@@ -30,9 +30,6 @@ DEPENDENCIES
   bundler
   rake
   rspec
-<<<<<<< HEAD
 
 BUNDLED WITH
    1.10.6
-=======
->>>>>>> convert to a C extension
