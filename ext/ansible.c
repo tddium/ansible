@@ -20,20 +20,24 @@ VALUE escape_to_html(VALUE self, VALUE rawdata)
 
     for (in_pos = 0, scratch_pos = 0; in_pos < (int)dataStrLen; in_pos++) {
         char c = dataStr[in_pos];
-        if (c == '\033') {
+
+        /*
+         * Copy characters into scratch that arent within an escape code block.
+         */
+        if (c == '\033') {          // Enter escape code on ^[
             inCode = true;
-        } else if (c == 'm') {
-            if (inCode) {
+        } else if (c == 'm') { 
+            if (inCode) {           // Exit escape code on m
                 inCode = false;
-            } else {
-                scratch[scratch_pos++] = c;
+            } else {                // Copy an m that's not terminating an escape code
+                scratch[scratch_pos++] = c; 
             }
-        } else if (!inCode) {
+        } else if (!inCode) {       // Copy everything else
             scratch[scratch_pos++] = c;
         }
     }
 
-    result = rb_str_new(scratch, scratch_pos);
+    result = rb_enc_str_new(scratch, scratch_pos, rb_enc_find("UTF-8"));
     free(scratch);
 
     return result;
