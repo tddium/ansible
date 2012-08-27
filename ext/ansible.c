@@ -1,5 +1,9 @@
 #include <stdio.h>
+#ifdef __APPLE__
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
 #include <stdbool.h>
 #include <ruby.h>
 #include <ruby/encoding.h>
