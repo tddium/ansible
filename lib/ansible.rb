@@ -1,6 +1,6 @@
 module Ansible
   def escape_to_html(data)
-    data = span(true, "none") + data
+    data = span(true, "none") + data.gsub(/\0/, '')
     data.gsub!(/\e\[0?m/, span(false, "none"))
     data.gsub!(/\e\[([0-9;]+)m/) { |match|
       span(false, *$1.split(';'))
