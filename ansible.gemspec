@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Solano Labs"]
   s.email       = ["info@tddium.com"]
-  s.homepage    = "http://www.tddium.com/"
+  s.homepage    = "https://github.com/tddium/ansible"
   s.summary     = %q{Fast ANSI->HTML conversion}
   s.description = <<-EOF
 Ansible is a fast (somewhat rough) conversion tool that takes a string with ANSI
