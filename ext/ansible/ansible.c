@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #ifdef __APPLE__
 #include <sys/malloc.h>
@@ -21,6 +22,25 @@
 #else
 #define DBG(...)                
 #endif
+
+#ifndef MIN
+#define        MIN(a,b)        (((a) < (b)) ? (a) : (b))
+#endif
+
+// BOTCH: original code assumed snprintf returned actual number of bytes used.
+// Not so: snprintf returns number of bytes that WOULD HAVE been used.
+int snprintf_wrapper(char *str, size_t size, const char *format, ...)
+{
+    size_t rv;
+    va_list ap;
+
+    va_start(ap, format);
+    rv = vsnprintf(str, size, format, ap);
+    va_end(ap);
+
+    rv = MIN(rv, size);		// Will still return < 0 on error
+    return rv;
+}
 
 int count_escapes(const char *s, size_t len)
 {
@@ -106,13 +126,12 @@ void make_span(char *code, char *span, size_t *span_len)
             }
 
             if (!first) {
-                size_t len = snprintf(ptr, MAX_SPAN_SIZE - *span_len, " ");
+                size_t len = snprintf_wrapper(ptr, MAX_SPAN_SIZE - *span_len, " ");
                 *span_len += len;
                 ptr = span + *span_len;
             }
 
-
-            size_t len = snprintf(ptr, MAX_SPAN_SIZE - *span_len, "ansible_%s", token);
+            size_t len = snprintf_wrapper(ptr, MAX_SPAN_SIZE - *span_len, "ansible_%s", token);
             *span_len += len;
             ptr = span + *span_len;
             first = false;
@@ -131,8 +150,9 @@ void make_span(char *code, char *span, size_t *span_len)
 void write_span(char *code, char **scratch, size_t *scratch_pos, size_t *scratchLen)
 {
     size_t span_len = 0;
-    char span[MAX_SPAN_SIZE];
+    char span[MAX_SPAN_SIZE+1];
 
+    memset(span, 0, sizeof(span));
     make_span(code, span, &span_len);
 
     write_scratch(span, span_len, scratch, scratch_pos, scratchLen);
