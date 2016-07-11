@@ -6,4 +6,4 @@ $CFLAGS = "-Wall -O3"
 #$CFLAGS = "-g -Wall -O0"
 
 dir_config('ansible')
-create_makefile('ansible')
+create_makefile('ansible/ansible')

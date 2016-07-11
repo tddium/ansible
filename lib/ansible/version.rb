@@ -1,3 +1,3 @@
-module AnsibleVersion
-  VERSION = '0.2.2'
+module Ansible
+  VERSION = '0.5.1'
 end

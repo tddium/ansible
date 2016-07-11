@@ -1,6 +1,6 @@
 *.swp
 pkg/*
-ext/*.so
+ext/*/*.o
+ext/*/*.so
 ext/Makefile
-ext/*.o
 *.gem
