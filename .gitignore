@@ -4,3 +4,4 @@ ext/*/*.o
 ext/*/*.so
 ext/Makefile
 *.gem
+*.solano*

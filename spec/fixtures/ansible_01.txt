@@ -1,0 +1,5 @@
+run options --seed 16785
+
+Progress: |[0m[1000D[KERROR["test_0001_should find proper subscriber key if passed user object", UtilsTest, 2016-07-10 14:40:28 -0400]
+ test_0001_should find proper subscriber key if passed user object#UtilsTest (1468176028.11s)
+ActiveRecord::RecordInvalid:         ActiveRecord::RecordInvalid: Validation failed: Email Ad

@@ -1,3 +1,1 @@
-require 'rubygems'
 require 'ansible'
-
