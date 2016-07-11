@@ -1,0 +1,10 @@
+---
+ruby_version: "ruby-1.9.3-p545"
+bundler_version: "1.7.12"
+hooks:
+  pre_setup: |
+    set -e
+    bundle install
+
+#    gem build ansible.gemspec
+#    gem install ansible*.gem
